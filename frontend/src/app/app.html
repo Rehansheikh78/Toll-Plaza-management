@@ -1,0 +1,98 @@
+<div class="container bg-blue-300">
+  <div class="max-w-3xl mx-auto p-6">
+
+    <h1 class="text-3xl font-bold text-center mb-6">Toll Plaza Dashboard</h1>
+
+    <div class="bg-white p-6 rounded-lg shadow-md">
+
+      <h2 class="text-xl font-semibold mb-2 text-center">Vehicle Entry Form</h2>
+
+      <p class="text-gray-500 mb-6 text-center">Enter the Vehicle Details below</p>
+
+      <form class="space-y-4">
+
+        <div>
+          <label class="block mb-2 font-medium">License Plate Number</label>
+          <input type="text" class="w-full p-2 border border-gray-300 rounded-md px-4 py-2 bg-gray-100" placeholder="ex:MH06RS4670" 
+          [(ngModel)]="vehicle.licensePlate" name="vehicle.licensePlate"  
+          autocapitalize="characters" required>
+          <br><br>
+
+          
+          <label for="vehicleType" class="block mb-2 font-medium">Vehicle Type</label>
+          <select id="vehicleType" class="w-full p-2 border-gray-300 rounded-md px-4 py-2 bg-gray-100" 
+          [(ngModel)]="vehicle.vehicleType" name="vehicleType" required>
+
+            <option value="">Select Vehicle Type</option>
+            <option value="Car">Car</option>
+            <option value="Truck">Truck</option>
+            <option value="Motorcycle">Motorcycle</option>
+          </select>
+          
+
+          <div class="flex items-center gap-2">
+            <input type="checkbox" id="isOfficialGovernment" class="h-4 w-4"
+            [(ngModel)]="vehicle.isOfficialGovernment" name="isOfficialGovernment">
+
+            <label for="isOfficialGovernment" class="text-blue-500 font-medium">Government/Official Vehicle</label>
+          </div>
+
+          <div class="flex items-center justify-end gap-2">
+            <button type="button" class="bg-red-500 hover:bg-red-600 text-white py-2 px-6 rounded-md"
+            (click)="clearForm()">Cancel</button>
+            <button type="button" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-6 rounded-md"
+            (click)="addVehicle()">Add Vehicle</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    </div>
+
+    <div class="max-w-3xl mx-auto p-6">
+      <div class="mb-4">
+        <div class="bg-white p-6 rounded-lg shadow-md">
+          <h2 class="text-xl font-semibold mb-2">Toll Logs</h2>
+          <div class="flex gap-4">
+
+            <select class="w-1/3 p-2 border border-gray-300 rounded-md px-4 py-2 bg-gray-100" [(ngModel)]="searchType" (change)="searchLogs()">
+              <option value="licensePlate">License Plate</option>
+              <option value="vehicleType">Vehicle Type</option>
+            </select>
+
+            <input type="text" class="w-2/3 p-2 border border-gray-300 rounded-md px-4 py-2" 
+              [placeholder]="searchType === 'licensePlate' ? 'Search License Plate' : 'Search Vehicle Type'"
+              [(ngModel)]="searchText" (input)="searchLogs()">
+
+          </div>
+
+          <div class="overflow-x-auto mt-4">
+            <table class="w-full border border-gray-300">
+                <thead class="bg-gray-100">
+                  <tr>
+
+                    <th class="border p-3">Id</th>
+                    <th class="border p-3">License Plate</th>
+                    <th class="border p-3">Vehicle Type</th>
+                    <th class="border p-3">Toll fee($)</th>
+                    <th class="border p-3">Status</th>
+                    <th class="border p-3">Time Stamp</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let log of filteredLogs">
+
+                    <td class="border p-3 text-center">{{log.id}}</td>
+                    <td class="border p-3 text-center">{{log.licensePlate}}</td>
+                    <td class="border p-3 text-center">{{log.vehicleType}}</td>
+                    <td class="border p-3 text-center">{{log.tollfee}}</td>
+                    <td class="border p-3 text-center">{{log.status}}</td>
+                    <td class="border p-3 text-center">{{log.timestamp | date:'short'}}</td>
+                  </tr>
+                </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
